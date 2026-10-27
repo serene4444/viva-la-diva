@@ -151,6 +151,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
 .chip.cert{background:var(--ink);color:var(--pink);box-shadow:0 0 0 2px var(--rose)}
 .chip.admirer{background:var(--pink)}
 .chip.queen{background:var(--ink);color:var(--cream)}
+.chip.celeb{background:var(--cream);border-style:double;border-width:3px;padding:3px 8px 1px}
 .chip.excused,.chip.cut{background:transparent;color:var(--soft);border-color:var(--soft)}
 .acts{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
 .mini{font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.1em;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:6px 11px 4px}
@@ -381,6 +382,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
     <button class="tab" data-view="fans" aria-pressed="false">Secret admirers</button>
     <button class="tab" data-view="mutual" aria-pressed="false">Mutual queens</button>
     <button class="tab" data-view="cut" aria-pressed="false">Cut off</button>
+    <button class="tab" data-view="celebs" aria-pressed="false">Celebs</button>
     <button class="tab" data-view="hidden" aria-pressed="false">Hidden</button>
   </div>
 
@@ -401,6 +403,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
       <details><summary>What do the labels mean?</summary><p>They're based on how long you've followed someone who doesn't follow you back. <b>Situationship</b>: under 3 months, so they might still come around. <b>Fan girl</b>: 3 months to a year. <b>Delulu</b>: 1 to 3 years. <b>Certified delulu</b>: 3 years or more. On your other lists, <b>Secret admirer</b> follows you but you don't follow back, and <b>Mutual queen</b> means you follow each other.</p></details>
       <details><summary>Does it unfollow people for me?</summary><p>No. Tap their name to open their profile and unfollow them there, then tap Cut off here to tick them off and watch your list shrink.</p></details>
       <details><summary>Someone on my list actually follows me. Why?</summary><p>Your export is a snapshot from the day you downloaded it. If they followed you after that, download a fresh export.</p></details>
+      <details><summary>Why aren't celebrities on my list?</summary><p>Celebrities, athletes, and big brands don't follow fans back, so they're filtered out automatically and kept in the Celebs tab. It only matches their exact official usernames, so fan pages and fake accounts still show up. If a celeb slips through, tap Hide. If someone got filtered by mistake, tap Not a celeb in the Celebs tab.</p></details>
       <details><summary>Why are there no profile pictures?</summary><p>Instagram's export only includes usernames and dates, so each person gets a monogram instead. Tap the name to see their real profile.</p></details>
     </div>
   </section>
@@ -426,6 +429,10 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
   let followers = new Map(), following = new Map(), view = "notback", isSample = false;
   let hidden = new Set(load("ig-hidden", [])), cut = new Set(load("ig-cut", []));
   let soundOn = load("ig-sound", false);
+  let notCeleb = new Set(load("ig-notceleb", []));
+  // official handles of celebrities, athletes, creators and brands that won't follow fans back
+  const CELEBS = new Set("21savage 9gag addisonraee adele adidas adidasoriginals aespa_official agustd aliaabhatt aliciakeys amazon anitta apple arianagrande badbunnypr badgalriri barackobama barstoolsports beingsalmankhan bellahadid bellapoarch benefitcosmetics beyonce billieeilish blackpinkofficial bleacherreport brentrivera brunomars bts.bighitofficial camila_cabello champagnepapi champions_league championsleague chanelofficial charlidamelio charlieputh chelseafc chipotle chloexhalle chrisbrownofficial chrisevans chrishemsworth ciara cocacola coldplay complex cosmopolitan cristiano daddyyankee dallascowboys davidbeckham ddlovato deepikapadukone dior disney dixiedamelio doechii dojacat dualipa dwyanewade edsheeran emmachamberlain emmawatson erling.haaland espn f1 fcbarcelona feid fentybeauty fifaworldcup gal_gadot gigihadid glossier gucci haileybieber halleberry harrystyles hm honeymoon houseofhighlights hudabeauty iamcardib iamhalsey iamsrk iamzlatanibrahimovic imaginedragons instagram intermiamicf ishowspeed itzy.all.in.us j.m jacobelordi jakepaul jamescharles janellemonae jasonderulo jbalvin jennierubyjane jenniferaniston jimmyfallon jin jlo joejonas justinbieber justintimberlake juventus k.benzema k.mbappe kaicenat karolg katrinakaif katyperry kellyrowland kendalljenner kevinhart4real kevinjonas khaby00 khloekardashian killatrav kimkardashian kingbach kingjames kobebryant kourtneykardash krisjenner ksi kyliecosmetics kyliejenner ladygaga lakers lalalalisa_m lanadelrey latto777 lelepons leomessi lewishamilton liampayne lilnasx liverpoolfc lizzo loganpaul lorengray louist91 louisvuitton maccosmetics maluma manchesterunited mancity markruffalo maroon5 marthastewart48 marvel mcdonalds metroboomin michelleobama mileycyrus milliebobbybrown mlb mosalah mrbeast myketowers narendramodi nasa natgeo natti_natasha nba nba2k netflix newjeans_official neymarjr nfl nhl niallhoran nickiminaj nickjonas nike nikefootball nikkietutorials nintendo normani nyxcosmetics oliviarodrigo olympics onedirection oprah ozuna parishilton patrickmahomes paulpogba people peso_pluma playstation pokemon postmalone prattprattpratt premierleague priyankachopra psg pubity rarebeauty rauwalejandro realmadrid reesewitherspoon rihanna rkive robertdowneyjr ronaldinho rosalia.vt roses_are_rosie sabrinacarpenter sachintendulkar samsung sebastianyatra selenagomez sephora serenawilliams sergioramos shakira shaq shawnmendes shraddhakapoor sidemen simonebiles skims snoopdogg sooyaaa__ sophiet spencerx sportscenter spotify starbucks stephencurry30 stevewilldoit sza tacobell target taylorswift tchalamet theellenshow theestallion thenotoriousmma therock theshaderoom theweeknd thv tiktok tombrady tomholland2013 travisscott twicetagram tyla tylathegoat uarmyhope ufc ultabeauty usher victoriabeckham victoriassecret vindiesel vinijr virat.kohli voguemagazine warriors wendys willsmith worldstar wwe xbox youtube zacefron zachking zara zayn zendaya".split(" "));
+  const isCeleb = k => CELEBS.has(k) && !notCeleb.has(k);
 
   // ---------- sound ----------
   let ac;
@@ -642,7 +649,8 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
   $("#rGo").addEventListener("click", ()=>{ hideReveal(); $("#results").scrollIntoView({behavior: reduced ? "auto" : "smooth"}); });
 
   // ---------- lists ----------
-  const candidates = () => [...following].filter(([k])=>!followers.has(k));
+  const candidates = () => [...following].filter(([k])=>!followers.has(k) && !isCeleb(k));
+  const celebRows = () => [...following].filter(([k])=>!followers.has(k) && isCeleb(k));
   const notBack = () => candidates().filter(([k])=>!hidden.has(k) && !cut.has(k));
   function currentRows(){
     let rows;
@@ -650,6 +658,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
     else if(view === "fans") rows = [...followers].filter(([k])=>!following.has(k));
     else if(view === "mutual") rows = [...following].filter(([k])=>followers.has(k));
     else if(view === "cut") rows = candidates().filter(([k])=>cut.has(k));
+    else if(view === "celebs") rows = celebRows();
     else rows = [...following].filter(([k])=>hidden.has(k));
     const q = $("#q").value.trim().toLowerCase().replace(/^@/,"");
     if(q) rows = rows.filter(([k])=>k.includes(q));
@@ -673,6 +682,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
     if(view === "fans") return {cls:"admirer", text:"Secret admirer", sub: t ? "Following you since " + fmt(t) : "Follows you"};
     if(view === "mutual") return {cls:"queen", text:"Mutual queen", sub:"You follow each other"};
     if(view === "cut") return {cls:"cut", text:"Cut off", sub:"You unfollowed them. Growth."};
+    if(view === "celebs") return {cls:"celeb", text:"★ Celeb", sub:"Official account · filtered out of your list"};
     return {cls:"excused", text:"Excused", sub:"Hidden from your list"};
   }
 
@@ -682,10 +692,11 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
 
   function render(){
     const rows = currentRows(), list = $("#list"); list.innerHTML = "";
-    const labels = {notback:"aren't following you back", fans:"secret admirers you don't follow back", mutual:"mutual queens", cut:"cut off so far", hidden:"excused from your list"};
+    const labels = {notback:"aren't following you back", fans:"secret admirers you don't follow back", mutual:"mutual queens", cut:"cut off so far", celebs:"celebs filtered out of your list", hidden:"excused from your list"};
     $("#count").textContent = rows.length;
     $("#of").textContent = labels[view];
-    $("#meta").textContent = following.size ? `You follow ${following.size} · ${followers.size} follow you` : "";
+    const nc = celebRows().length;
+    $("#meta").textContent = following.size ? `You follow ${following.size} · ${followers.size} follow you` + (nc ? ` · ${nc} celeb${nc>1?"s":""} filtered out` : "") : "";
     $("#badge").hidden = !isSample;
 
     const pool = candidates().filter(([k])=>!hidden.has(k)), done = pool.filter(([k])=>cut.has(k)).length;
@@ -695,7 +706,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
 
     if(!rows.length){
       const li=document.createElement("li"); li.className="empty";
-      const empty = {notback:"Everyone follows you back. Diva behavior.", fans:"No secret admirers right now.", mutual:"No mutuals yet.", cut:"Nobody cut off yet. Tap Cut off after you unfollow someone.", hidden:"Nobody hidden."};
+      const empty = {notback:"Everyone follows you back. Diva behavior.", fans:"No secret admirers right now.", mutual:"No mutuals yet.", cut:"Nobody cut off yet. Tap Cut off after you unfollow someone.", celebs:"No celebrities found in who you follow.", hidden:"Nobody hidden."};
       li.textContent = !following.size ? "Upload your export to see the list." : empty[view];
       list.append(li); return;
     }
@@ -721,6 +732,8 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
         btn("Cut off", "cutbtn", ()=>leave(()=>{ cut.add(k); save("ig-cut",[...cut]); }), `Mark @${u} as unfollowed`);
       } else if(view === "cut"){
         btn("Undo", "", ()=>leave(()=>{ cut.delete(k); save("ig-cut",[...cut]); }), `Put @${u} back on your list`);
+      } else if(view === "celebs"){
+        btn("Not a celeb", "", ()=>leave(()=>{ notCeleb.add(k); save("ig-notceleb",[...notCeleb]); }), `Put @${u} back on your list`);
       } else if(view === "hidden"){
         btn("Unhide", "", ()=>leave(()=>{ hidden.delete(k); save("ig-hidden",[...hidden]); }), `Unhide @${u}`);
       }
@@ -747,7 +760,7 @@ ul.list{list-style:none;margin:0;padding:6px;background:var(--cream);border:3px 
   function loadSample(withReveal){
     const now = Date.now()/1000, d = n => now - n*86400;
     followers = new Map(["maya.codes","jordan_runs","priya.eats","denton.coffee.club","alex.k","sam_rivera","tia.designs"].map((u,i)=>[u,{u,t:d(40+i*90)}]));
-    const days = {"maya.codes":300,"jordan_runs":420,"priya.eats":200,"alex.k":600,"sam_rivera":90,"nasa":1300,"chris.lowell_":20,"brianna.m":75,"the.tech.daily":160,"kev_on_film":260,"lena.studio":400};
+    const days = {"maya.codes":300,"jordan_runs":420,"priya.eats":200,"alex.k":600,"sam_rivera":90,"nasa":1300,"chris.lowell_":20,"brianna.m":75,"the.tech.daily":160,"kev_on_film":260,"lena.studio":400,"badgalriri":900,"zendaya":500};
     following = new Map(Object.keys(days).map(u=>[u,{u,t:d(days[u])}]));
     isSample = true; setStatus("These are example accounts. Upload your export to see your own.");
     setView("notback");
